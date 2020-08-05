@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo } from 'react'
+import React, { ReactElement, useMemo, useState } from 'react'
 import {
   View,
   Text,
@@ -10,11 +10,19 @@ import {
   TouchableNativeFeedback,
   ScrollView,
 } from 'react-native'
+import {
+  SceneMap,
+  SceneRendererProps,
+  TabBar,
+  TabView,
+  NavigationState,
+} from 'react-native-tab-view'
 import { Header } from './common/Header'
 import { Card, CARD_WIDTH, CARD_MARGIN, PADDING } from './common/Card'
 import { IconButton } from './common/IconButton'
 import { Card2, CARD2_WIDTH } from './common/Card2'
 import { SAMPLE_SLIDEER_DATA } from './API'
+import { TabItem } from './common/TabItem'
 
 type HomeScreenProps = {}
 
@@ -33,89 +41,57 @@ export const PERSPECTIVE = 1000
 Animated.createAnimatedComponent(FlatList)
 
 export const HomeScreen = (_: HomeScreenProps): ReactElement => {
-  const offsetX = new Animated.Value(0)
-  const velocityX = new Animated.Value(0)
-  const fullCardWidth = CARD_WIDTH + CARD_MARGIN * 2
+  const [navigationState, setNavigationState] = useState<NavigationState<any>>({
+    index: 0,
+    routes: [
+      { key: 'nike', title: 'Nike' },
+      { key: 'addidas', title: 'Addidas' },
+      { key: 'jordan', title: 'Jordan' },
+      { key: 'puma', title: 'Puma' },
+      { key: 'pedro', title: 'Pedro' },
+    ],
+  })
 
   const fullCardWidth2 = CARD2_WIDTH + CARD_MARGIN * 1.5
-
-  const snapToOffsets = useMemo(() => [...Array(5).keys()].map((_, i) => i * fullCardWidth), [])
   const snapToOffsets2 = useMemo(() => [...Array(5).keys()].map((_, i) => i * fullCardWidth2), [])
-
-  const renderItem = ({ item, index }: { item: ISlider; index: number }): ReactElement => {
-    const isLeft = (index + 1) * fullCardWidth - fullCardWidth
-    const isMiddle = isLeft + fullCardWidth / 2
-    const isDisappeaing = isMiddle - (isMiddle - isLeft) / 2
-    const isRight = isLeft + fullCardWidth
-
-    const rotateY = offsetX.interpolate({
-      inputRange: [isLeft, isRight],
-      outputRange: [0, 0.8],
-    })
-
-    const shoeImageRotateZ = offsetX.interpolate({
-      inputRange: [isLeft, isRight],
-      outputRange: ['-25deg', '40deg'],
-    })
-
-    const shoeTranslateXSpeed = offsetX.interpolate({
-      inputRange: [isLeft, isDisappeaing, isRight],
-      outputRange: [0, -fullCardWidth / 2, 0],
-      extrapolateLeft: 'clamp',
-    })
-
-    return (
-      <Card
-        key={`card-${index}`}
-        item={item}
-        rotateY={rotateY}
-        offsetX={offsetX}
-        shoeImageRotateZ={shoeImageRotateZ}
-        shoeTranslateXSpeed={shoeTranslateXSpeed}
-      />
-    )
-  }
 
   const renderItem2 = ({ item, index }: { item: ISlider; index: number }): ReactElement => {
     return <Card2 key={`card-${index}`} item={item} />
   }
 
-  const onScrollEvent = Animated.event(
-    [
-      {
-        nativeEvent: {
-          contentOffset: {
-            x: offsetX,
-          },
-          velocity: {
-            x: velocityX,
-          },
-        },
-      },
-    ],
-    { useNativeDriver: true }
+  const renderScene = (): ReactElement => {
+    return <TabItem />
+  }
+
+  const renderTabBar = (props: SceneRendererProps & { navigationState: State }): ReactElement => (
+    <TabBar
+      {...props}
+      scrollEnabled
+      indicatorStyle={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}
+      style={{ backgroundColor: 'transparent' }}
+      indicatorContainerStyle={{
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+      }}
+      labelStyle={{ color: 'gray', textTransform: 'capitalize', fontWeight: '700', fontSize: 18 }}
+      tabStyle={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}
+    />
   )
+
+  const handleIndexChange = (index: number): void => {
+    setNavigationState((prevState) => ({ ...prevState, index }))
+  }
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Header />
 
-        <View style={styles.contentWrapper}>
-          <Animated.FlatList
-            data={SAMPLE_SLIDEER_DATA}
-            renderItem={renderItem}
-            keyExtractor={(_, index: number) => `item-${index}`}
-            contentContainerStyle={{ paddingVertical: PADDING, paddingHorizontal: 5 }}
-            showsHorizontalScrollIndicator={false}
-            snapToOffsets={snapToOffsets}
-            pagingEnabled
-            horizontal
-            decelerationRate="fast"
-            onScroll={onScrollEvent}
-            scrollEventThrottle={16}
-          />
-        </View>
+        <TabView
+          navigationState={navigationState}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          onIndexChange={handleIndexChange}
+        />
 
         <View style={styles.footer}>
           <TouchableNativeFeedback>
@@ -145,7 +121,7 @@ export const HomeScreen = (_: HomeScreenProps): ReactElement => {
             }}
           />
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -159,13 +135,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  contentWrapper: {
-    // paddingVertical: 15,
-  },
-
   footer: {
     marginTop: 15,
-    flexGrow: 1,
+    // flex: 1,
   },
 
   sectionWrapper: {

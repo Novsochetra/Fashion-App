@@ -7,7 +7,7 @@ export const WINDOW_WIDTH = Dimensions.get('window').width
 export const PADDING = 15
 export const CARD_MARGIN = 15
 export const CARD_WIDTH = (WINDOW_WIDTH - CARD_MARGIN * 2 - PADDING * 2) * 0.7
-export const CARD_HEIGHT = CARD_WIDTH * 1.5
+export const CARD_HEIGHT = CARD_WIDTH * 1.3
 
 type CardProps = {
   item: ISlider
