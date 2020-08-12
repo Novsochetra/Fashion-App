@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Animated, StyleSheet } from 'react-native'
+import { Animated, StyleSheet, Image, Dimensions, View } from 'react-native'
 
 type BackgroundCircleProps = {
   transformWidth: Animated.Value
@@ -9,6 +9,8 @@ type BackgroundCircleProps = {
   translateY: Animated.Value
   scale: Animated.AnimatedInterpolation
 }
+
+const windowWidth = Dimensions.get('window').width
 
 export const BackgroundCircle = ({
   transformWidth,
@@ -29,7 +31,9 @@ export const BackgroundCircle = ({
           transform: [{ translateY }, { translateX }, { scale }],
         },
       ]}
-    />
+    >
+      <Image source={require('../assets/shoe1.png')} style={styles.image} />
+    </Animated.View>
   )
 }
 
@@ -37,5 +41,14 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'orange',
     height: 200,
+  },
+
+  image: {
+    height: windowWidth / 5.5,
+    width: windowWidth / 2.5,
+    position: 'absolute',
+    bottom: 100 / 4,
+    left: 100 / 1.5,
+    transform: [{ rotateZ: '-25deg' }],
   },
 })

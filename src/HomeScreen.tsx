@@ -129,6 +129,7 @@ export const HomeScreen = (_: HomeScreenProps): ReactElement => {
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
+    backgroundColor: '#ffffff',
   },
 
   container: {

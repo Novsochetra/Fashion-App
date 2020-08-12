@@ -1,14 +1,19 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import { Animated, View, Text, StyleSheet, Dimensions, Easing } from 'react-native'
+import { SafeAreaView, useSafeArea, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { CARD_WIDTH } from './common/Card'
-import { Feather } from '@expo/vector-icons'
-import { IconButton } from './common/IconButton'
 import { NavigationBar } from './detail/NavigationBar'
 import { BackgroundCircle } from './detail/BackgroundCircle'
+import { SectionList } from './detail/SectionList'
+import { Description } from './detail/Description'
+import { VariantPart } from './detail/VariantPart'
+import { Button } from './common/Button'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const { width, height } = Dimensions.get('window')
 
 export const DetailScreen = (): ReactElement => {
+  const { bottom } = useSafeAreaInsets()
   const [ready, setReady] = useState(false)
   const additionTranslateY = width / 1
   const headerTranslateY = new Animated.Value(100)
@@ -22,9 +27,10 @@ export const DetailScreen = (): ReactElement => {
     inputRange: [-additionTranslateY, 0, height / 4, height / 2],
     outputRange: [1, 1, 0, 0],
   })
-  const duration = 3000
+  const duration = 500
 
   useEffect(() => {
+    console.log('BOTTOM HEIHGT: ', bottom)
     Animated.parallel([
       Animated.timing(headerTranslateY, {
         toValue: -additionTranslateY,
@@ -34,7 +40,7 @@ export const DetailScreen = (): ReactElement => {
       Animated.timing(headerTranformWidth, {
         toValue: width,
         duration,
-        easing: Easing.linear,
+        easing: Easing.elastic(2),
       }),
       Animated.timing(headerBorderRadius, {
         toValue: width / 2,
@@ -56,8 +62,7 @@ export const DetailScreen = (): ReactElement => {
     ]).start()
   }, [ready])
   return (
-    <View>
-      {/* Header Animation */}
+    <SafeAreaView style={[styles.safeArea, { paddingBottom: bottom }]}>
       <NavigationBar
         opacity={headerTranslateY.interpolate({
           inputRange: [-additionTranslateY, 0],
@@ -76,7 +81,6 @@ export const DetailScreen = (): ReactElement => {
           outputRange: [2, 1],
         })}
       />
-
       <Animated.View
         style={[
           styles.contentContainer,
@@ -85,18 +89,45 @@ export const DetailScreen = (): ReactElement => {
             opacity: contentOpacity,
           },
         ]}
-      />
-    </View>
+      >
+        <SectionList />
+
+        <View style={styles.divider} />
+
+        <Description />
+
+        <VariantPart />
+
+        <View style={styles.footerWrapper}>
+          <Button label={`ADD TO BAG`} />
+        </View>
+      </Animated.View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+
   contentContainer: {
     width,
-    minHeight: 200,
-    flex: 1,
-    flexGrow: 1,
-    backgroundColor: 'blue',
+    height: '100%',
     marginTop: 10,
+    padding: 15,
+    flexDirection: 'column',
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: 'brown',
+  },
+
+  footerWrapper: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    paddingBottom: 15,
   },
 })

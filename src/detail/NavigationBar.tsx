@@ -13,7 +13,24 @@ export const NavigationBar = ({ opacity }: NavigationBarProps): ReactElement => 
   const navigation = useNavigation()
   return (
     <Animated.View style={[styles.container, { opacity }]}>
-      <IconButton iconName="arrow-left" onPress={() => navigation.goBack()} />
+      <IconButton
+        iconName="arrow-left"
+        color="#ffffff"
+        btnContainerStyle={styles.iconButton}
+        onPress={() => {
+          console.log('GO BACK')
+          navigation.goBack()
+        }}
+      />
+      <IconButton
+        iconName="heart"
+        color="#ffffff"
+        btnContainerStyle={styles.btnHeart}
+        onPress={() => {
+          console.log('GO BACK')
+          navigation.goBack()
+        }}
+      />
     </Animated.View>
   )
 }
@@ -21,11 +38,31 @@ export const NavigationBar = ({ opacity }: NavigationBarProps): ReactElement => 
 const styles = StyleSheet.create({
   container: {
     width,
-    height: 70,
+    height: 50,
     zIndex: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
+  },
+
+  iconButton: {
+    backgroundColor: 'transparent',
+  },
+
+  btnHeart: {
+    backgroundColor: 'orange',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 })
