@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react'
-import { View, Text, Dimensions, StyleSheet, Animated } from 'react-native'
+import { Image, View, Text, Dimensions, StyleSheet, Animated } from 'react-native'
 import { PERSPECTIVE, ISlider } from '../HomeScreen'
 import { IconButton } from './IconButton'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
 export const WINDOW_WIDTH = Dimensions.get('window').width
 export const PADDING = 15
@@ -24,6 +26,7 @@ export const Card = ({
   shoeImageRotateZ,
   shoeTranslateXSpeed,
 }: CardProps): ReactElement => {
+  const navigation = useNavigation()
   return (
     <View>
       <Animated.View
@@ -49,15 +52,29 @@ export const Card = ({
           />
         </View>
       </Animated.View>
-      <Animated.Image
-        source={productURL}
+      <Animated.View
         style={[
           styles.productPhoto,
           {
             transform: [{ translateX: shoeTranslateXSpeed }, { rotateZ: shoeImageRotateZ }],
           },
         ]}
-      />
+      >
+        <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
+          <Image
+            source={productURL}
+            style={{ width: CARD_WIDTH, height: 100, position: 'relative' }}
+          />
+        </TouchableOpacity>
+        {/* <Animated.Image
+          source={productURL}
+          style={[
+            {
+              transform: [{ translateX: shoeTranslateXSpeed }, { rotateZ: shoeImageRotateZ }],
+            },
+          ]}
+        /> */}
+      </Animated.View>
     </View>
   )
 }
