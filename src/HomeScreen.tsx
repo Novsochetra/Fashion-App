@@ -1,7 +1,6 @@
 import React, { ReactElement, useMemo, useState } from 'react'
 import {
   View,
-  SafeAreaView,
   StyleSheet,
   FlatList,
   Animated,
@@ -10,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native'
 import { SceneRendererProps, TabBar, TabView, NavigationState } from 'react-native-tab-view'
+import { StatusBar } from 'expo-status-bar'
 import { Header } from './common/Header'
 import { CARD_MARGIN, PADDING } from './common/Card'
 import { IconButton } from './common/IconButton'
@@ -29,7 +29,7 @@ export type ISlider = {
   backgroundColor: string
 }
 
-const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window')
+const { width: WINDOW_WIDTH } = Dimensions.get('window')
 export const PERSPECTIVE = 1000
 
 Animated.createAnimatedComponent(FlatList)
@@ -76,7 +76,8 @@ export const HomeScreen = (_: HomeScreenProps): ReactElement => {
   }
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <View style={styles.safeAreaView}>
+      <StatusBar backgroundColor="#ffffff" />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Header />
 
@@ -104,19 +105,9 @@ export const HomeScreen = (_: HomeScreenProps): ReactElement => {
             horizontal
             decelerationRate="fast"
           />
-          <View
-            style={{
-              width: WINDOW_WIDTH,
-              height: 100,
-              backgroundColor: '#',
-              position: 'absolute',
-              zIndex: -1,
-              bottom: 0,
-            }}
-          />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 

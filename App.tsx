@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useFonts } from 'expo-font'
 import { Feather as FeatherIcon } from '@expo/vector-icons'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { HomeScreen } from './src/HomeScreen'
 import { DetailScreen } from './src/DetailScreen'
 import { CartScreen } from './src/CartScreen'
@@ -65,49 +66,51 @@ const App = (): ReactElement => {
     return <AppLoading />
   } else {
     return (
-      <NavigationContainer>
-        <BottomTab.Navigator tabBarOptions={{ showLabel: false }}>
-          <BottomTab.Screen
-            name="Home"
-            component={HomeStack}
-            options={{
-              tabBarIcon: getTabBarIcon('home'),
-            }}
-          />
-          <BottomTab.Screen
-            name="WishList"
-            component={() => (
-              <View>
-                <Text>Fack u</Text>
-              </View>
-            )}
-            options={{
-              tabBarIcon: getTabBarIcon('heart'),
-            }}
-          />
-          <BottomTab.Screen
-            name="Location"
-            component={HomeScreen}
-            options={{
-              tabBarIcon: getTabBarIcon('map-pin'),
-            }}
-          />
-          <BottomTab.Screen
-            name="Cart"
-            component={CartScreen}
-            options={{
-              tabBarIcon: getTabBarIcon('shopping-cart'),
-            }}
-          />
-          <BottomTab.Screen
-            name="Profile"
-            component={HomeScreen}
-            options={{
-              tabBarIcon: getTabBarIcon('user'),
-            }}
-          />
-        </BottomTab.Navigator>
-      </NavigationContainer>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <BottomTab.Navigator tabBarOptions={{ showLabel: false }}>
+            <BottomTab.Screen
+              name="Home"
+              component={HomeStack}
+              options={{
+                tabBarIcon: getTabBarIcon('home'),
+              }}
+            />
+            <BottomTab.Screen
+              name="WishList"
+              component={() => (
+                <View>
+                  <Text>Fack u</Text>
+                </View>
+              )}
+              options={{
+                tabBarIcon: getTabBarIcon('heart'),
+              }}
+            />
+            <BottomTab.Screen
+              name="Location"
+              component={HomeScreen}
+              options={{
+                tabBarIcon: getTabBarIcon('map-pin'),
+              }}
+            />
+            <BottomTab.Screen
+              name="Cart"
+              component={CartScreen}
+              options={{
+                tabBarIcon: getTabBarIcon('shopping-cart'),
+              }}
+            />
+            <BottomTab.Screen
+              name="Profile"
+              component={HomeScreen}
+              options={{
+                tabBarIcon: getTabBarIcon('user'),
+              }}
+            />
+          </BottomTab.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
     )
   }
 }

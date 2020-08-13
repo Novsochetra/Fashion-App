@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { Animated, StyleSheet, Dimensions } from 'react-native'
 import { IconButton } from '../common/IconButton'
 
@@ -11,12 +11,16 @@ type NavigationBarProps = {
 
 export const NavigationBar = ({ opacity }: NavigationBarProps): ReactElement => {
   const navigation = useNavigation()
+  const { params }: any = useRoute()
   return (
     <Animated.View style={[styles.container, { opacity }]}>
       <IconButton
         iconName="arrow-left"
         color="#ffffff"
-        btnContainerStyle={styles.iconButton}
+        btnContainerStyle={[
+          styles.iconButton,
+          { backgroundColor: params.backgroundColor ?? 'orange' },
+        ]}
         onPress={() => {
           console.log('GO BACK')
           navigation.goBack()
@@ -25,7 +29,10 @@ export const NavigationBar = ({ opacity }: NavigationBarProps): ReactElement => 
       <IconButton
         iconName="heart"
         color="#ffffff"
-        btnContainerStyle={styles.btnHeart}
+        btnContainerStyle={[
+          styles.btnHeart,
+          { backgroundColor: params.backgroundColor ?? 'orange' },
+        ]}
         onPress={() => {
           console.log('GO BACK')
           navigation.goBack()
@@ -44,10 +51,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
+    paddingHorizontal: 10,
   },
 
   iconButton: {
     backgroundColor: 'transparent',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 
   btnHeart: {

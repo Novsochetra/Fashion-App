@@ -1,9 +1,10 @@
 import React, { useMemo, ReactElement } from 'react'
-import { View, Text, Animated, FlatList, Dimensions, StyleSheet } from 'react-native'
+import { View, Animated, Dimensions, StyleSheet } from 'react-native'
 import { SAMPLE_SLIDEER_DATA } from '../API'
-import { Card, CARD_WIDTH, CARD_MARGIN, PADDING } from './Card'
 import { ISlider } from '../HomeScreen'
-const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get('window')
+import { Card, CARD_WIDTH, CARD_MARGIN, PADDING } from './Card'
+
+const { width: WINDOW_WIDTH } = Dimensions.get('window')
 
 export const TabItem = (): ReactElement => {
   const offsetX = new Animated.Value(0)
@@ -46,7 +47,7 @@ export const TabItem = (): ReactElement => {
 
     const shoeTranslateXSpeed = offsetX.interpolate({
       inputRange: [isLeft, isDisappeaing, isRight],
-      outputRange: [0, -fullCardWidth / 2, -fullCardWidth],
+      outputRange: [0, -fullCardWidth, -fullCardWidth],
       extrapolateLeft: 'clamp',
     })
 

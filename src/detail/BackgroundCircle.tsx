@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Animated, StyleSheet, Image, Dimensions, View } from 'react-native'
+import { useRoute } from '@react-navigation/native'
 
 type BackgroundCircleProps = {
   transformWidth: Animated.Value
@@ -20,11 +21,13 @@ export const BackgroundCircle = ({
   translateY,
   scale,
 }: BackgroundCircleProps): ReactElement => {
+  const { params }: any = useRoute()
   return (
     <Animated.View
       style={[
         styles.container,
         {
+          backgroundColor: params.backgroundColor,
           width: transformWidth,
           height: transformHeight,
           borderRadius: transformBorderRadius,

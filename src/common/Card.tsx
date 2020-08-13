@@ -1,5 +1,13 @@
 import React, { ReactElement } from 'react'
-import { Image, View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native'
+import {
+  Image,
+  View,
+  Dimensions,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+  Easing,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { PERSPECTIVE, ISlider } from '../HomeScreen'
 import { Text } from '../common/Text'
@@ -27,6 +35,26 @@ export const Card = ({
   shoeTranslateXSpeed,
 }: CardProps): ReactElement => {
   const navigation = useNavigation()
+  const scale = new Animated.Value(1)
+
+  const zoomIn = (): void => {
+    Animated.timing(scale, {
+      toValue: 0.9,
+      duration: 300,
+      easing: Easing.elastic(1),
+      useNativeDriver: true,
+    }).start()
+  }
+
+  const zoomOut = (): void => {
+    Animated.timing(scale, {
+      toValue: 1,
+      duration: 300,
+      easing: Easing.elastic(3),
+      useNativeDriver: true,
+    }).start()
+  }
+
   return (
     <View>
       <Animated.View
@@ -51,29 +79,31 @@ export const Card = ({
             btnContainerStyle={styles.IconButtonStyle}
           />
         </View>
-      </Animated.View>
-      <Animated.View
-        style={[
-          styles.productPhoto,
-          {
-            transform: [{ translateX: shoeTranslateXSpeed }, { rotateZ: shoeImageRotateZ }],
-          },
-        ]}
-      >
-        <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
-          <Image
-            source={productURL}
-            style={{ width: CARD_WIDTH, height: 100, position: 'relative' }}
-          />
-        </TouchableOpacity>
-        {/* <Animated.Image
-          source={productURL}
+        <Animated.View
           style={[
+            styles.productPhoto,
             {
               transform: [{ translateX: shoeTranslateXSpeed }, { rotateZ: shoeImageRotateZ }],
             },
           ]}
-        /> */}
+        >
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate('Detail', { backgroundColor })}
+            onPressIn={zoomIn}
+            onPressOut={zoomOut}
+          >
+            <Animated.Image
+              source={productURL}
+              style={{
+                width: CARD_WIDTH,
+                height: 120,
+                position: 'relative',
+                transform: [{ scale }],
+              }}
+            />
+          </TouchableOpacity>
+        </Animated.View>
       </Animated.View>
     </View>
   )
@@ -86,7 +116,6 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     borderRadius: 20,
-    // marginRight: CARD_MARGIN,
     marginHorizontal: CARD_MARGIN,
 
     shadowColor: '#000',
@@ -96,8 +125,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 3,
-
-    elevation: 5,
   },
 
   cardHeader: {
@@ -130,8 +157,6 @@ const styles = StyleSheet.create({
 
   productPhoto: {
     width: CARD_WIDTH,
-    height: 100,
-    zIndex: 100,
     position: 'absolute',
     left: CARD_WIDTH * 0.15,
     top: CARD_HEIGHT / 3,

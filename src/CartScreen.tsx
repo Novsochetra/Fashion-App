@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef, useMemo } from 'react'
+import React, { ReactElement, useState, useRef } from 'react'
 import {
   UIManager,
   FlatList,
@@ -6,8 +6,6 @@ import {
   StyleSheet,
   ImageSourcePropType,
   LayoutAnimation,
-  Animated,
-  Easing,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductRowItem } from './cart/ProductRowItem'
@@ -108,6 +106,7 @@ export const CartScreen = (): ReactElement => {
   return (
     <SafeAreaView style={styles.container}>
       <Header totalItem={products.length} />
+      <View style={styles.divider} />
       <FlatList
         data={products}
         ref={flatlistRef}
@@ -129,5 +128,12 @@ const styles = StyleSheet.create({
 
   footerWrapper: {
     paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: 'gray',
+    marginTop: 15,
   },
 })
