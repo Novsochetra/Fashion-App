@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react'
-import { Image, View, Text, Dimensions, StyleSheet, Animated } from 'react-native'
-import { PERSPECTIVE, ISlider } from '../HomeScreen'
-import { IconButton } from './IconButton'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Image, View, Dimensions, StyleSheet, Animated, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { PERSPECTIVE, ISlider } from '../HomeScreen'
+import { Text } from '../common/Text'
+import { IconButton } from './IconButton'
 
 export const WINDOW_WIDTH = Dimensions.get('window').width
 export const PADDING = 15

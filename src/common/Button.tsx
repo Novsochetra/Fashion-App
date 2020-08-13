@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react'
 import {
-  View,
-  Text,
   TouchableOpacity,
   StyleProp,
   ViewStyle,
@@ -10,7 +8,7 @@ import {
   Animated,
   Easing,
 } from 'react-native'
-import { TapResizeHandler } from './TapResizeHandler'
+import { Text } from '../common/Text'
 
 type ButtonProps = {
   label?: string

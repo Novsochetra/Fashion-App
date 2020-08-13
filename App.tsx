@@ -1,19 +1,19 @@
-import { StatusBar } from 'expo-status-bar'
-import React, { ReactElement, ReactNode } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import React, { ReactElement } from 'react'
+import { View } from 'react-native'
+import { AppLoading } from 'expo'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeScreen } from './src/HomeScreen'
-import { IconButton } from './src/common/IconButton'
+import { useFonts } from 'expo-font'
 import { Feather as FeatherIcon } from '@expo/vector-icons'
+import { HomeScreen } from './src/HomeScreen'
 import { DetailScreen } from './src/DetailScreen'
+import { CartScreen } from './src/CartScreen'
+import { Text } from './src/common/Text'
 
 console.disableYellowBox = true
 
-const AppStack = createStackNavigator()
 const Stack = createStackNavigator()
-const { width: WINDOW_WIDTH } = Dimensions.get('window')
 
 const HomeStack = (): ReactElement => (
   <Stack.Navigator
@@ -58,60 +58,58 @@ const getTabBarIcon = (name: string) => ({ color, size = 25 }: { color: string; 
 )
 
 const App = (): ReactElement => {
-  return (
-    <NavigationContainer>
-      <BottomTab.Navigator tabBarOptions={{ showLabel: false }}>
-        <BottomTab.Screen
-          name="Home"
-          component={HomeStack}
-          options={{
-            tabBarIcon: getTabBarIcon('home'),
-          }}
-        />
-        <BottomTab.Screen
-          name="WishList"
-          component={() => (
-            <View>
-              <Text>Fack u</Text>
-            </View>
-          )}
-          options={{
-            tabBarIcon: getTabBarIcon('heart'),
-          }}
-        />
-        <BottomTab.Screen
-          name="Location"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: getTabBarIcon('map-pin'),
-          }}
-        />
-        <BottomTab.Screen
-          name="Cart"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: getTabBarIcon('shopping-cart'),
-          }}
-        />
-        <BottomTab.Screen
-          name="Profile"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: getTabBarIcon('user'),
-          }}
-        />
-      </BottomTab.Navigator>
-    </NavigationContainer>
-  )
+  const [fontsLoaded] = useFonts({
+    JosefinSans: require('./assets/font/JosefinSans-Regular.ttf'),
+  })
+  if (!fontsLoaded) {
+    return <AppLoading />
+  } else {
+    return (
+      <NavigationContainer>
+        <BottomTab.Navigator tabBarOptions={{ showLabel: false }}>
+          <BottomTab.Screen
+            name="Home"
+            component={HomeStack}
+            options={{
+              tabBarIcon: getTabBarIcon('home'),
+            }}
+          />
+          <BottomTab.Screen
+            name="WishList"
+            component={() => (
+              <View>
+                <Text>Fack u</Text>
+              </View>
+            )}
+            options={{
+              tabBarIcon: getTabBarIcon('heart'),
+            }}
+          />
+          <BottomTab.Screen
+            name="Location"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: getTabBarIcon('map-pin'),
+            }}
+          />
+          <BottomTab.Screen
+            name="Cart"
+            component={CartScreen}
+            options={{
+              tabBarIcon: getTabBarIcon('shopping-cart'),
+            }}
+          />
+          <BottomTab.Screen
+            name="Profile"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: getTabBarIcon('user'),
+            }}
+          />
+        </BottomTab.Navigator>
+      </NavigationContainer>
+    )
+  }
 }
 
 export default App
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})

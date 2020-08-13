@@ -1,7 +1,6 @@
 import React, { ReactElement, useMemo, useState } from 'react'
 import {
   View,
-  Text,
   SafeAreaView,
   StyleSheet,
   FlatList,
@@ -10,19 +9,14 @@ import {
   TouchableNativeFeedback,
   ScrollView,
 } from 'react-native'
-import {
-  SceneMap,
-  SceneRendererProps,
-  TabBar,
-  TabView,
-  NavigationState,
-} from 'react-native-tab-view'
+import { SceneRendererProps, TabBar, TabView, NavigationState } from 'react-native-tab-view'
 import { Header } from './common/Header'
-import { Card, CARD_WIDTH, CARD_MARGIN, PADDING } from './common/Card'
+import { CARD_MARGIN, PADDING } from './common/Card'
 import { IconButton } from './common/IconButton'
 import { Card2, CARD2_WIDTH } from './common/Card2'
 import { SAMPLE_SLIDEER_DATA } from './API'
 import { TabItem } from './common/TabItem'
+import { Text } from './common/Text'
 
 type HomeScreenProps = {}
 

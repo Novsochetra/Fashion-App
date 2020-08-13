@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
-import { Image, View, Text, Dimensions, StyleSheet } from 'react-native'
-import { ISlider, THEME_COLOR } from './HomeScreen'
+import { Image, View, Dimensions, StyleSheet } from 'react-native'
+import { Text } from '../common/Text'
+import { ISlider } from './HomeScreen'
 import { IconButton } from './IconButton'
 
 export const WINDOW_WIDTH = Dimensions.get('window').width

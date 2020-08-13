@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import { Text } from '../common/Text'
 import { IconButton } from './IconButton'
 
 type HeaderProps = {}

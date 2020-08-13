@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react'
+import React, { ReactElement, useState, useEffect, useMemo } from 'react'
 import { Animated, View, Text, StyleSheet, Dimensions, Easing } from 'react-native'
 import { SafeAreaView, useSafeArea, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { CARD_WIDTH } from './common/Card'
@@ -16,8 +16,9 @@ export const DetailScreen = (): ReactElement => {
   const { bottom } = useSafeAreaInsets()
   const [ready, setReady] = useState(false)
   const additionTranslateY = width / 1
-  const headerTranslateY = new Animated.Value(100)
-  const headerTranslateX = new Animated.Value(0)
+  const headerTranslateY = useMemo(() => new Animated.Value(100), [])
+  const headerTranslateX = useMemo(() => new Animated.Value(0), [])
+  const [activeShoeSize, setActiveShoeSize] = useState(0)
 
   const headerTranformWidth = new Animated.Value(CARD_WIDTH)
   const headerBorderRadius = new Animated.Value(0)
@@ -30,7 +31,6 @@ export const DetailScreen = (): ReactElement => {
   const duration = 500
 
   useEffect(() => {
-    console.log('BOTTOM HEIHGT: ', bottom)
     Animated.parallel([
       Animated.timing(headerTranslateY, {
         toValue: -additionTranslateY,
@@ -61,6 +61,9 @@ export const DetailScreen = (): ReactElement => {
       }),
     ]).start()
   }, [ready])
+
+  const handleChangeVariantShoeSize = (i: number): void => setActiveShoeSize(i)
+
   return (
     <SafeAreaView style={[styles.safeArea, { paddingBottom: bottom }]}>
       <NavigationBar
@@ -96,7 +99,10 @@ export const DetailScreen = (): ReactElement => {
 
         <Description />
 
-        <VariantPart />
+        <VariantPart
+          activeIndex={activeShoeSize}
+          handleChangeVariantShoeSize={handleChangeVariantShoeSize}
+        />
 
         <View style={styles.footerWrapper}>
           <Button label={`ADD TO BAG`} />
