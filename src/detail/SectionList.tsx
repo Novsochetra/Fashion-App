@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react'
-import { View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native'
-
-const { width } = Dimensions.get('window')
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
 export const SectionList = (): ReactElement => {
   return (

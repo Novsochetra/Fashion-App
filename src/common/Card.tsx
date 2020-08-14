@@ -1,16 +1,8 @@
-import React, { ReactElement } from 'react'
-import {
-  Image,
-  View,
-  Dimensions,
-  StyleSheet,
-  Animated,
-  TouchableOpacity,
-  Easing,
-} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { PERSPECTIVE, ISlider } from '../HomeScreen'
+import React, { ReactElement } from 'react'
+import { Animated, Dimensions, Easing, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from '../common/Text'
+import { ISlider, PERSPECTIVE } from '../HomeScreen'
 import { IconButton } from './IconButton'
 
 export const WINDOW_WIDTH = Dimensions.get('window').width
@@ -30,7 +22,6 @@ type CardProps = {
 export const Card = ({
   item: { brandName, productName, price, backgroundColor, productURL },
   rotateY,
-  offsetX,
   shoeImageRotateZ,
   shoeTranslateXSpeed,
 }: CardProps): ReactElement => {
@@ -96,9 +87,7 @@ export const Card = ({
             <Animated.Image
               source={productURL}
               style={{
-                width: CARD_WIDTH,
-                height: 120,
-                position: 'relative',
+                ...styles.image,
                 transform: [{ scale }],
               }}
             />
@@ -173,5 +162,10 @@ const styles = StyleSheet.create({
 
   cardFooter: {
     alignSelf: 'flex-end',
+  },
+
+  image: {
+    width: CARD_WIDTH,
+    height: 120,
   },
 })

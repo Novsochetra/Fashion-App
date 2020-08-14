@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect, useMemo } from 'react'
-import { Animated, View, Text, StyleSheet, Dimensions, Easing } from 'react-native'
-import { SafeAreaView, useSafeArea, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Animated, View, StyleSheet, Dimensions, Easing } from 'react-native'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { CARD_WIDTH } from './common/Card'
 import { NavigationBar } from './detail/NavigationBar'
 import { BackgroundCircle } from './detail/BackgroundCircle'
@@ -8,13 +8,12 @@ import { SectionList } from './detail/SectionList'
 import { Description } from './detail/Description'
 import { VariantPart } from './detail/VariantPart'
 import { Button } from './common/Button'
-import { ScrollView } from 'react-native-gesture-handler'
 
 const { width, height } = Dimensions.get('window')
 
 export const DetailScreen = (): ReactElement => {
   const { bottom } = useSafeAreaInsets()
-  const [ready, setReady] = useState(false)
+  const [ready, _setReady] = useState(false)
   const additionTranslateY = width / 1
   const headerTranslateY = useMemo(() => new Animated.Value(100), [])
   const headerTranslateX = useMemo(() => new Animated.Value(0), [])

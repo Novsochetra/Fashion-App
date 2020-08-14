@@ -16,14 +16,13 @@ module.exports = {
     'prettier',
     'prettier/@typescript-eslint',
     'prettier/react',
+    'prettier/@typescript-eslint',
     'prettier/standard',
   ],
   rules: {
     '@typescript-eslint/no-unused-vars': [
-      2,
-      {
-        argsIgnorePattern: '^_',
-      },
+      'error',
+      { varsIgnorePattern: '^_', argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
     ],
     '@typescript-eslint/explicit-function-return-type': [
       2,

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle, TouchableOpacity } from 'react-native'
+import { StyleSheet, StyleProp, ViewStyle, TouchableOpacity } from 'react-native'
 import { Feather as FeatherIcon } from '@expo/vector-icons'
 
 type IconButtonProps = {

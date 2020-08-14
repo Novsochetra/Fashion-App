@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Animated, StyleSheet, Image, Dimensions, View } from 'react-native'
+import { Animated, StyleSheet, Image, Dimensions } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 
 type BackgroundCircleProps = {
