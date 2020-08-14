@@ -80,7 +80,7 @@ const App = (): ReactElement => {
               name="WishList"
               component={() => (
                 <View>
-                  <Text>Fack u</Text>
+                  <Text>Wishlist Screen</Text>
                 </View>
               )}
               options={{
